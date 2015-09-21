@@ -58,3 +58,17 @@ To convert a buffer to a string, call `buffer.toString()`.
 */
 
 
+function write (buffer, encoding, next) {
+    this.push( buffer.toString().toUpperCase() );
+    next();
+}
+
+function end (done) {
+    done();
+}
+
+var through = require('through2');
+var stream = through(write, end);
+
+process.stdin.pipe(stream).pipe(process.stdout);
+
